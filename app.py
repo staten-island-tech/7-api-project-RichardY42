@@ -31,9 +31,11 @@ def on_click():
     print("pressed")
 
 root =tk.Tk()
-root.title("TESTINGGGG")
-label=tk.Label(root, text="label test")
-label.pack()
+root.geometry("670x500")
+root.title("D&D 5e")
+label1=tk.Label(root, text="D&D 5e info search")
+label1.geometry()
+label1.pack(side="top")
 
 button=tk.Button(root, text="click test", command=on_click)
 button.pack()
