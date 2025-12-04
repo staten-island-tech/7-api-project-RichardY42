@@ -10,13 +10,13 @@ All prompts must ONLY be related to tkinter and not the logic of the application
 You can copy and paste your prompts and the AI response into a google doc to be shared with me at the end of the project.
 See my example below.
 """
-
+#https://5e-bits.github.io/docs/
 
 
 import requests
 
 def getmonster(mons):
-    response = request.get(f"/api/2014/monsters/{mons.lower()}")
+    response = requests.get(f"/api/2014/monsters/{mons.lower()}")
 
 
 
@@ -31,13 +31,10 @@ def on_click():
     print("pressed")
 
 root =tk.Tk()
-root.title
-label=tk.Label(root, text="")
+root.title("TESTINGGGG")
+label=tk.Label(root, text="label test")
 label.pack()
 
 button=tk.Button(root, text="click test", command=on_click)
 button.pack()
 root.mainloop()
-entry
-frame
-canvas
