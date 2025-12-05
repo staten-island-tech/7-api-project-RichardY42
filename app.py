@@ -14,29 +14,25 @@ See my example below.
 
 
 import requests
-
-def getmonster(mons):
-    response = requests.get(f"/api/2014/monsters/{mons.lower()}")
-
-
-
-
-
-
-
-
 import tkinter as tk
 
-def on_click():
-    print("pressed")
+def on_clickskill():
+    entry=tk.Entry(root, width=15)
+    entry.pack()
+    def getskill():
+        userinput=entry.get()
+        response = requests.get(f"/api/2014/monsters/{userinput.lower()}") 
 
 root =tk.Tk()
 root.geometry("670x500")
 root.title("D&D 5e")
-label1=tk.Label(root, text="D&D 5e info search")
-label1.geometry()
+label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race")
+label1.config(font=("Times New Roman", 16))
 label1.pack(side="top")
 
-button=tk.Button(root, text="click test", command=on_click)
+
+
+button=tk.Button(root, text="Skills", command=)
+button
 button.pack()
 root.mainloop()
