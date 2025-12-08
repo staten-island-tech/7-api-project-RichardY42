@@ -15,24 +15,46 @@ See my example below.
 
 import requests
 import tkinter as tk
-
-def on_clickskill():
-    entry=tk.Entry(root, width=15)
-    entry.pack()
-    def getskill():
-        userinput=entry.get()
-        response = requests.get(f"/api/2014/monsters/{userinput.lower()}") 
-
 root =tk.Tk()
+def clickskill():
+    for widget in root.winfo_children():
+        widget.destroy()
+    entry=tk.Entry(root, width=10)
+    entry.pack()
+    userinput=entry.get()
+    response = requests.get(f"https://www.dnd5eapi.co/api/2014/skills/{userinput.lower()}")
+    root.title(response["index"])
+    name.config(text=f"name: {response["name"]}")
+    desc.config(text=f"description: {response["desc"]}")
+    abltyscr.config(text=f"ability score: {response["ability_score"]}")
+    
+def clickclass():
+    entry=tk.Entry(root, width=10)
+    entry.pack()
+    userinput=entry.get()
+    response = requests.get(f"https://www.dnd5eapi.co/api/2014/classes/{userinput.lower()}")
+    print
+def clickrace():
+    entry=tk.Entry(root, width=10)
+    entry.pack()
+    userinput=entry.get()
+    response = requests.get(f"https://www.dnd5eapi.co/api/2014/races/{userinput.lower()}")
+
 root.geometry("670x500")
 root.title("D&D 5e")
-label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race")
-label1.config(font=("Times New Roman", 16))
+label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16))
 label1.pack(side="top")
 
+name=tk.Label(root, text="")
 
 
-button=tk.Button(root, text="Skills", command=)
-button
+button=tk.Button(root, text="Skills", command=clickskill)
+button.config()
+button.pack(side="left")
+button=tk.Button(root, text="Class", command=clickclass)
+button.config()
 button.pack()
+button=tk.Button(root, text="Race", command=clickrace)
+button.config()
+button.pack(side="right")
 root.mainloop()
