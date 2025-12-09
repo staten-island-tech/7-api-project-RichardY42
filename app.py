@@ -11,50 +11,76 @@ You can copy and paste your prompts and the AI response into a google doc to be 
 See my example below.
 """
 #https://5e-bits.github.io/docs/
+#.grid(row=0, column=0)
+
 
 
 import requests
 import tkinter as tk
 root =tk.Tk()
+def clicksearch():
+    entry.get()
+
+#searchbutton=tk.Button(root, text="Search", command=clicksearch)
 def clickskill():
-    for widget in root.winfo_children():
-        widget.destroy()
-    entry=tk.Entry(root, width=10)
-    entry.pack()
+    
     userinput=entry.get()
+    
     response = requests.get(f"https://www.dnd5eapi.co/api/2014/skills/{userinput.lower()}")
+    
+    #return data
     root.title(response["index"])
     name.config(text=f"name: {response["name"]}")
     desc.config(text=f"description: {response["desc"]}")
     abltyscr.config(text=f"ability score: {response["ability_score"]}")
     
 def clickclass():
-    entry=tk.Entry(root, width=10)
-    entry.pack()
     userinput=entry.get()
     response = requests.get(f"https://www.dnd5eapi.co/api/2014/classes/{userinput.lower()}")
-    print
+    
+    #return data
+    name.config(text=f"name: {response["name"]}")
+    desc.config(text=f"description: {response["desc"]}")
+    abltyscr.config(text=f"ability score: {response["ability_score"]}")
+
 def clickrace():
-    entry=tk.Entry(root, width=10)
-    entry.pack()
     userinput=entry.get()
     response = requests.get(f"https://www.dnd5eapi.co/api/2014/races/{userinput.lower()}")
-
+    
+    #return data
+    name.config(text=f"name: {response["name"]}")
+    desc.config(text=f"description: {response["desc"]}")
+    abltyscr.config(text=f"ability score: {response["ability_score"]}")
 root.geometry("670x500")
 root.title("D&D 5e")
-label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16))
-label1.pack(side="top")
+label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16)).grid(row=0, column=7)
+
 
 name=tk.Label(root, text="")
+name.grid(row=5, column=20)
+desc=tk.Label(root, text="")
+desc.grid(row=10, column=20)
+abltyscr=tk.Label(root, text="")
+abltyscr.grid(row=15, column=20)
 
+entry=tk.Entry(root, width=10, size=10)
+entry.grid(row=5, column=7)
 
-button=tk.Button(root, text="Skills", command=clickskill)
-button.config()
-button.pack(side="left")
-button=tk.Button(root, text="Class", command=clickclass)
-button.config()
-button.pack()
-button=tk.Button(root, text="Race", command=clickrace)
-button.config()
-button.pack(side="right")
+skillbutton=tk.Button(root, text="Skills", command=clickskill).grid(row=1, column=5)
+
+#skillbutton.config()
+
+classbutton=tk.Button(root, text="Class", command=clickclass).grid(row=1, column=7)
+
+#classbutton.config()
+
+racebutton=tk.Button(root, text="Race", command=clickrace).grid(row=1, column=10)
+
+#racebutton.config()
+
 root.mainloop()
+
+
+
+
+
