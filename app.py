@@ -14,29 +14,36 @@ See my example below.
 #.grid(row=0, column=0)
 
 
-
-import requests
 import tkinter as tk
+import requests
+
 root =tk.Tk()
-def clicksearch():
-    entry.get()
 
 #searchbutton=tk.Button(root, text="Search", command=clicksearch)
-def clickskill():
-    
+def choseskill():
+    skillbutton.pack_forget()
+    entry=tk.Entry(root, width=50)
+    entry.pack(pady=10)
+    searchskill=tk.Button(root, text="Search", command=clickskill)
+    searchskill.pack(pady=30)
+    def clickskill():
+        
+        userinput=entry.get().lower()
+        url=f"https://www.dnd5eapi.co/api/2014/skills/{userinput}"
+        response = requests.get(url)
+        data = response.json()
+        
+        #return data
+        root.title(data["index"])
+        name.config(text=f"Name: {data['name']}")
+        desc.config(text=f"Description: {data['desc']}")
+        abltyscr.config(text=f"ability score: {data['ability_score']}")
+        print(data['ability_score'])
+        
+""" def clickclass():
     userinput=entry.get()
-    
-    response = requests.get(f"https://www.dnd5eapi.co/api/2014/skills/{userinput.lower()}")
-    
-    #return data
-    root.title(response["index"])
-    name.config(text=f"name: {response["name"]}")
-    desc.config(text=f"description: {response["desc"]}")
-    abltyscr.config(text=f"ability score: {response["ability_score"]}")
-    
-def clickclass():
-    userinput=entry.get()
-    response = requests.get(f"https://www.dnd5eapi.co/api/2014/classes/{userinput.lower()}")
+    url=f"https://www.dnd5eapi.co/api/2014/classes/{userinput.lower()}"
+    response = requests.get(url)
     
     #return data
     name.config(text=f"name: {response["name"]}")
@@ -45,38 +52,49 @@ def clickclass():
 
 def clickrace():
     userinput=entry.get()
-    response = requests.get(f"https://www.dnd5eapi.co/api/2014/races/{userinput.lower()}")
+    url=f"https://www.dnd5eapi.co/api/2014/races/{userinput.lower()}"
+    response = requests.get(url)
     
     #return data
     name.config(text=f"name: {response["name"]}")
     desc.config(text=f"description: {response["desc"]}")
-    abltyscr.config(text=f"ability score: {response["ability_score"]}")
+    abltyscr.config(text=f"ability score: {response["ability_score"]}") """
+
 root.geometry("670x500")
 root.title("D&D 5e")
-label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16)).grid(row=0, column=7)
+label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16)).pack(pady=20)
 
 
-name=tk.Label(root, text="")
-name.grid(row=5, column=20)
-desc=tk.Label(root, text="")
-desc.grid(row=10, column=20)
-abltyscr=tk.Label(root, text="")
-abltyscr.grid(row=15, column=20)
+name=tk.Label(root, text="",font=("Times New Roman", 10))
+name.pack(side="top")
+desc=tk.Label(root, text="",  font=("Times New Roman", 10))
+desc.pack(pady=20)
+abltyscr=tk.Label(root, text="",  font=("Times New Roman", 10))
+abltyscr.pack(pady=20)
 
-entry=tk.Entry(root, width=10, size=10)
-entry.grid(row=5, column=7)
 
-skillbutton=tk.Button(root, text="Skills", command=clickskill).grid(row=1, column=5)
+
+
+
+
+
+skillbutton=tk.Button(root, text="Skills", command=choseskill).pack()
+
+
+
+
+#______________________________________________________________________________________
+""" 
 
 #skillbutton.config()
 
-classbutton=tk.Button(root, text="Class", command=clickclass).grid(row=1, column=7)
+classbutton=tk.Button(root, text="Class", command=clickclass).pack(row=1, column=7)
 
 #classbutton.config()
 
-racebutton=tk.Button(root, text="Race", command=clickrace).grid(row=1, column=10)
+racebutton=tk.Button(root, text="Race", command=clickrace).pack(row=1, column=10)
 
-#racebutton.config()
+#racebutton.config() """
 
 root.mainloop()
 
