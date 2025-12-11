@@ -22,23 +22,33 @@ root =tk.Tk()
 #searchbutton=tk.Button(root, text="Search", command=clicksearch)
 def choseskill():
     skillbutton.pack_forget()
+    name.pack_forget()
+    desc.pack_forget()
+    abltyscr.pack_forget()
     entry=tk.Entry(root, width=50)
-    entry.pack(pady=10)
-    searchskill=tk.Button(root, text="Search", command=clickskill)
-    searchskill.pack(pady=30)
+    entry.pack(pady=20)
     def clickskill():
-        
+        name.pack(side="top")
+        desc.pack(pady=1)
+        abltyscr.pack(pady=1)
         userinput=entry.get().lower()
         url=f"https://www.dnd5eapi.co/api/2014/skills/{userinput}"
         response = requests.get(url)
+        if response.status_code != 200:
+            print("Error fetching data!")
+            return None
         data = response.json()
         
         #return data
         root.title(data["index"])
         name.config(text=f"Name: {data['name']}")
         desc.config(text=f"Description: {data['desc']}")
-        abltyscr.config(text=f"ability score: {data['ability_score']}")
+        abltyscr.config(text=f"Ability Score: {data['ability_score']}")
         print(data['ability_score'])
+    
+    searchskill=tk.Button(root, text="Search", command=clickskill)
+    searchskill.pack(pady=1)
+    
         
 """ def clickclass():
     userinput=entry.get()
@@ -60,25 +70,29 @@ def clickrace():
     desc.config(text=f"description: {response["desc"]}")
     abltyscr.config(text=f"ability score: {response["ability_score"]}") """
 
-root.geometry("670x500")
+root.geometry("800x700")
 root.title("D&D 5e")
 label1=tk.Label(root, text="D&D 5e info search: Search a skill, class, or race", font=("Times New Roman", 16)).pack(pady=20)
+skillbutton=tk.Button(root, text="Skills",font=("Times New Roman", 16), command=choseskill)
+skillbutton.pack()
+classbutton=tk.Button(root, text="Skills",font=("Times New Roman", 16), command=choseclass)
+classbutton.pack()
+racebutton=tk.Button(root, text="Skills",font=("Times New Roman", 16), command=choserace)
+racebutton.pack()
+name=tk.Label(root, text="",font=("Times New Roman", 16))
+name.pack(pady=0)
+desc=tk.Label(root, wraplength=650, text="",  font=("Times New Roman", 13))
+desc.pack(pady=10)
+abltyscr=tk.Label(root, text="",  font=("Times New Roman", 13))
+abltyscr.pack(pady=10)
 
 
-name=tk.Label(root, text="",font=("Times New Roman", 10))
-name.pack(side="top")
-desc=tk.Label(root, text="",  font=("Times New Roman", 10))
-desc.pack(pady=20)
-abltyscr=tk.Label(root, text="",  font=("Times New Roman", 10))
-abltyscr.pack(pady=20)
 
 
 
 
 
 
-
-skillbutton=tk.Button(root, text="Skills", command=choseskill).pack()
 
 
 
