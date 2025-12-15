@@ -24,21 +24,18 @@ def choseskill():
     skillbutton.pack_forget()
     classbutton.pack_forget()
     racebutton.pack_forget()
-    name.pack_forget()
-    desc.pack_forget()
-    abltyscr.pack_forget()
+    
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
     def searchskill():
-        name.pack(side="top")
+        name.pack(pady=5)
         desc.pack(pady=1)
-        abltyscr.pack(pady=1)
+        abltyscr.pack(pady=4)
         userinput=entry.get().lower()
         url=f"https://www.dnd5eapi.co/api/2014/skills/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            print("Error fetching data!")
-            return None
+            errorlabel.pack()
         data = response.json()
         
         #return data
@@ -50,16 +47,15 @@ def choseskill():
     
     searchskill=tk.Button(root, text="Search", command=searchskill)
     searchskill.pack(pady=1)
-
-
+    possval=tk.Label(root, wraplength=650, text="Possible values: acrobatics, animal-handling, arcana, athletics, deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuasion, religion, sleight-of-hand, stealth, survival")
+    possval.pack()
+    errorlabel=tk.Label(root, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
 
 def choseclass():
     skillbutton.pack_forget()
     classbutton.pack_forget()
     racebutton.pack_forget()
-    name.pack_forget()
-    desc.pack_forget()
-    abltyscr.pack_forget()
+    
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
     def searchclass():
@@ -91,9 +87,7 @@ def choserace():
     skillbutton.pack_forget()
     classbutton.pack_forget()
     racebutton.pack_forget()
-    name.pack_forget()
-    desc.pack_forget()
-    abltyscr.pack_forget()
+    
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
     def searchrace():
@@ -130,11 +124,11 @@ classbutton.pack(pady=5)
 racebutton=tk.Button(root, text="Races",font=("Times New Roman", 30), command=choserace)
 racebutton.pack(pady=5)
 name=tk.Label(root, text="",font=("Times New Roman", 16))
-name.pack(pady=0)
+#name.pack(pady=0)
 desc=tk.Label(root, wraplength=650, text="",  font=("Times New Roman", 13))
-desc.pack(pady=10)
+#desc.pack(pady=10)
 abltyscr=tk.Label(root, wraplength=150, text="",  font=("Times New Roman", 13))
-abltyscr.pack(pady=10)
+#abltyscr.pack(pady=10)
 
 
 """ def clickclass():
