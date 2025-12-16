@@ -19,7 +19,6 @@ import requests
 
 root =tk.Tk()
 
-#searchbutton=tk.Button(root, text="Search", command=clicksearch)
 def choseskill():
     skillbutton.pack_forget()
     classbutton.pack_forget()
@@ -27,6 +26,7 @@ def choseskill():
     
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
+
     def searchskill():
         name.pack(pady=5)
         desc.pack(pady=1)
@@ -36,9 +36,10 @@ def choseskill():
         response = requests.get(url)
         if response.status_code != 200:
             errorlabel.pack()
+        if response.status_code == 200:
+            errorlabel.pack_forget() 
         data = response.json()
         
-        #return data
         root.title(data["index"])
         name.config(text=f"Name: {data['name']}")
         desc.config(text=f"Description: {data['desc']}")
@@ -47,9 +48,10 @@ def choseskill():
     
     searchskill=tk.Button(root, text="Search", command=searchskill)
     searchskill.pack(pady=1)
-    possval=tk.Label(root, wraplength=650, text="Possible values: acrobatics, animal-handling, arcana, athletics, deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuasion, religion, sleight-of-hand, stealth, survival")
+    possvalues="Possible values: acrobatics, animal-handling, arcana, athletics, deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuasion, religion, sleight-of-hand, stealth, survival"
+    possval.config(text=possvalues)
     possval.pack()
-    errorlabel=tk.Label(root, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
+    
 
 def choseclass():
     skillbutton.pack_forget()
@@ -58,6 +60,7 @@ def choseclass():
     
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
+
     def searchclass():
         name.pack(side="top")
         desc.pack(pady=1)
@@ -66,11 +69,11 @@ def choseclass():
         url=f"https://www.dnd5eapi.co/api/2014/classes/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            print("Error fetching data!")
-            return None
+            errorlabel.pack()
+        if response.status_code == 200:
+            errorlabel.pack_forget() 
         data = response.json()
         
-        #return data
         root.title(data["index"])
         name.config(text=f"Name: {data['name']}")
         desc.config(text=f"Description: {data['desc']}")
@@ -79,7 +82,9 @@ def choseclass():
     
     searchskill=tk.Button(root, text="Search", command=searchclass)
     searchskill.pack(pady=1)
-
+    possvalues="Possible values: barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard"
+    possval.config(text=possvalues)
+    possval.pack()
 
 
 
@@ -90,6 +95,7 @@ def choserace():
     
     entry=tk.Entry(root, width=50)
     entry.pack(pady=20)
+
     def searchrace():
         name.pack(side="top")
         desc.pack(pady=1)
@@ -98,11 +104,11 @@ def choserace():
         url=f"https://www.dnd5eapi.co/api/2014/races/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            print("Error fetching data!")
-            return None
+            errorlabel.pack()
+        if response.status_code == 200:
+            errorlabel.pack_forget() 
         data = response.json()
-        
-        #return data
+    
         root.title(data["index"])
         name.config(text=f"Name: {data['name']}")
         desc.config(text=f"Description: {data['desc']}")
@@ -111,7 +117,10 @@ def choserace():
     
     searchskill=tk.Button(root, text="Search", command=searchrace)
     searchskill.pack(pady=1)
-        
+    possvalues="Possible values: dragonborn, dwarf, elf, gnome, half-elf, half-orc, halfling, human, tiefling"
+    possval.config(text=possvalues)
+    possval.pack()
+
 
 
 root.geometry("800x700")
@@ -123,12 +132,11 @@ classbutton=tk.Button(root, text="Classes",font=("Times New Roman", 30), command
 classbutton.pack(pady=5)
 racebutton=tk.Button(root, text="Races",font=("Times New Roman", 30), command=choserace)
 racebutton.pack(pady=5)
+possval=tk.Label(root, wraplength=650, text="")
+errorlabel=tk.Label(root, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
 name=tk.Label(root, text="",font=("Times New Roman", 16))
-#name.pack(pady=0)
 desc=tk.Label(root, wraplength=650, text="",  font=("Times New Roman", 13))
-#desc.pack(pady=10)
 abltyscr=tk.Label(root, wraplength=150, text="",  font=("Times New Roman", 13))
-#abltyscr.pack(pady=10)
 
 
 """ def clickclass():
