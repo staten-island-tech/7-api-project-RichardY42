@@ -13,15 +13,29 @@ See my example below.
 #https://5e-bits.github.io/docs/
 #.grid(row=0, column=0)
 #.pack_forget()
+#pack order not state order
 
 import tkinter as tk
 import requests
 
 root =tk.Tk()
+root.geometry("800x700")
+root.title("D&D 5e")
 
-menu_frame = tk.Frame(root)
-search_frame = tk.Frame(root)
-menu_frame.pack(fill="both", expand=True)
+menuframe = tk.Frame(root)
+searchframe = tk.Frame(root)
+menuframe.pack(fill="both", expand=True)
+
+possval=tk.Label(searchframe, wraplength=650, text="")
+errorlabel=tk.Label(searchframe, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
+name=tk.Label(searchframe, text="",font=("Times New Roman", 16))
+desc=tk.Label(searchframe, wraplength=650, text="",  font=("Times New Roman", 13))
+abltyscr=tk.Label(searchframe, wraplength=150, text="",  font=("Times New Roman", 13))
+
+def goingback():
+    searchframe.pack_forget()
+    menuframe.pack(fill="both", expand=True)
+goback=tk.Button(root, text="Go Back", command=goingback)
 
 def choseskill():
     skillbutton.pack_forget()
@@ -125,15 +139,7 @@ def choserace():
     possvalues="Possible values: dragonborn, dwarf, elf, gnome, half-elf, half-orc, halfling, human, tiefling"
     possval.config(text=possvalues)
     possval.pack()
-def goingback():
-    name.pack_forget()
-    desc.pack_forget()
-    abltyscr.pack_forget()
-    
 
-    skillbutton.pack()
-    classbutton.pack()
-    racebutton.pack()
 
 
 root.geometry("800x700")
@@ -146,12 +152,7 @@ classbutton=tk.Button(root, text="Classes",font=("Times New Roman", 30), command
 classbutton.pack(pady=5)
 racebutton=tk.Button(root, text="Races",font=("Times New Roman", 30), command=choserace)
 racebutton.pack(pady=5)
-possval=tk.Label(root, wraplength=650, text="")
-errorlabel=tk.Label(root, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
-name=tk.Label(root, text="",font=("Times New Roman", 16))
-desc=tk.Label(root, wraplength=650, text="",  font=("Times New Roman", 13))
-abltyscr=tk.Label(root, wraplength=150, text="",  font=("Times New Roman", 13))
-goback=tk.Button(root, text="Go Back", command=goingback)
+
 
 
 
@@ -193,7 +194,6 @@ classbutton=tk.Button(root, text="Class", command=clickclass).pack(row=1, column
 racebutton=tk.Button(root, text="Race", command=clickrace).pack(row=1, column=10)
 
 #racebutton.config() """
-
 
 
 
