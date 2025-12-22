@@ -31,6 +31,7 @@ possval=tk.Label(searchframe, wraplength=450, text="")
 search=tk.Button(searchframe,text="Search")
 errorlabel=tk.Label(searchframe, wraplength=650, text="", font=("Times New Roman", 16))
 name=tk.Label(searchframe, text="",font=("Times New Roman", 16))
+hitdie=tk.Label(searchframe, text="",font=("Times New Roman", 16))
 desc=tk.Label(searchframe, wraplength=550, text="",  font=("Times New Roman", 15))
 abltyscr=tk.Label(searchframe, wraplength=150, text="",  font=("Times New Roman", 16))
 
@@ -43,14 +44,14 @@ desc.pack(pady=5)
 abltyscr.pack(pady=5)
 
 
-def goingback():
+""" def goingback():
     searchframe.pack_forget()
     menuframe.pack(fill="both", expand=True)
     label1.pack()
     skillbutton.pack()
     classbutton.pack(pady=5)
     racebutton.pack(pady=5)
-goback=tk.Button(searchframe, text="<- Go Back", command=goingback)
+goback=tk.Button(searchframe, text="<- Go Back", command=goingback) """
 
 def choseskill():
     menuframe.pack_forget()
@@ -79,7 +80,7 @@ def choseskill():
     
     search.config(command=findskill)
     
-    goback.pack(pady=50)
+   # goback.pack(pady=50)
 
     
 
@@ -95,16 +96,16 @@ def choseclass():
         url=f"https://www.dnd5eapi.co/api/2014/classes/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            errorlabel.pack()
+            errorlabel.config(text="Error fetching data!")
         if response.status_code == 200:
             errorlabel.pack_forget() 
         data = response.json()
         
         root.title(data["index"])
         name.config(text=f"Name: {data['name']}")
-        desc.config(text=f"Description: {data['desc']}")
-        abltyscr.config(text=f"Ability Score: {data['ability_score']}")
-        print(data['ability_score'])
+        hitdie.config(text=f"Hit Die: {data['hit_die']}")
+        desc.config(text=f"Description: {data['proficiency_choices']}",  font=("Times New Roman", 10))
+        
     
     search.config(command=findclass)
     
@@ -124,7 +125,7 @@ def choserace():
         url=f"https://www.dnd5eapi.co/api/2014/races/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            errorlabel.pack()
+            errorlabel.config(text="Error fetching data!")
         if response.status_code == 200:
             errorlabel.pack_forget() 
         data = response.json()
