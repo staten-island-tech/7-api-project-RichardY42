@@ -24,36 +24,49 @@ root.title("D&D 5e")
 
 menuframe = tk.Frame(root)
 searchframe = tk.Frame(root)
-menuframe.pack(fill="both", expand=True)
 
-possval=tk.Label(searchframe, wraplength=650, text="")
-errorlabel=tk.Label(searchframe, wraplength=650, text="Error fetching data!", font=("Times New Roman", 16))
+
+entry=tk.Entry(searchframe, width=50)
+possval=tk.Label(searchframe, wraplength=450, text="")
+search=tk.Button(searchframe,text="Search")
+errorlabel=tk.Label(searchframe, wraplength=650, text="", font=("Times New Roman", 16))
 name=tk.Label(searchframe, text="",font=("Times New Roman", 16))
-desc=tk.Label(searchframe, wraplength=650, text="",  font=("Times New Roman", 13))
-abltyscr=tk.Label(searchframe, wraplength=150, text="",  font=("Times New Roman", 13))
+desc=tk.Label(searchframe, wraplength=550, text="",  font=("Times New Roman", 15))
+abltyscr=tk.Label(searchframe, wraplength=150, text="",  font=("Times New Roman", 16))
+
+entry.pack(pady=20)
+possval.pack()
+search.pack()
+errorlabel.pack()
+name.pack(pady=10)
+desc.pack(pady=5)
+abltyscr.pack(pady=5)
+
 
 def goingback():
     searchframe.pack_forget()
     menuframe.pack(fill="both", expand=True)
-goback=tk.Button(root, text="Go Back", command=goingback)
+    label1.pack()
+    skillbutton.pack()
+    classbutton.pack(pady=5)
+    racebutton.pack(pady=5)
+goback=tk.Button(searchframe, text="<- Go Back", command=goingback)
 
 def choseskill():
-    skillbutton.pack_forget()
-    classbutton.pack_forget()
-    racebutton.pack_forget()
-    goback.pack(pady=5)
-    entry=tk.Entry(root, width=50)
-    entry.pack(pady=30)
-
-    def searchskill():
-        name.pack(pady=5)
-        desc.pack(pady=1)
-        abltyscr.pack(pady=4)
+    menuframe.pack_forget()
+    searchframe.pack(fill="both", expand=True)
+    possvalues="Possible values:\n acrobatics, animal-handling, arcana, athletics, deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuasion, religion, sleight-of-hand, stealth, survival"
+    possval.config(text=possvalues)
+    
+    
+    def findskill():
+        
         userinput=entry.get().lower()
         url=f"https://www.dnd5eapi.co/api/2014/skills/{userinput}"
         response = requests.get(url)
         if response.status_code != 200:
-            errorlabel.pack()
+            errorlabel.config(text="Error fetching data!")
+            
         if response.status_code == 200:
             errorlabel.pack_forget() 
         data = response.json()
@@ -64,25 +77,20 @@ def choseskill():
         abltyscr.config(text=f"Ability Score: {data['ability_score']['index']}")
         print(data['ability_score'])
     
-    searchskill=tk.Button(root, text="Search", command=searchskill)
-    searchskill.pack(pady=1)
-    possvalues="Possible values: acrobatics, animal-handling, arcana, athletics, deception, history, insight, intimidation, investigation, medicine, nature, perception, performance, persuasion, religion, sleight-of-hand, stealth, survival"
-    possval.config(text=possvalues)
-    possval.pack()
+    search.config(command=findskill)
+    
+    goback.pack(pady=50)
+
     
 
 def choseclass():
-    skillbutton.pack_forget()
-    classbutton.pack_forget()
-    racebutton.pack_forget()
-    goback.pack(pady=5)
-    entry=tk.Entry(root, width=50)
-    entry.pack(pady=30)
+    menuframe.pack_forget()
+    searchframe.pack(fill="both", expand=True)
+    possvalues="Possible values:\n barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard"
+    possval.config(text=possvalues)
 
-    def searchclass():
-        name.pack(side="top")
-        desc.pack(pady=1)
-        abltyscr.pack(pady=1)
+    def findclass():
+        
         userinput=entry.get().lower()
         url=f"https://www.dnd5eapi.co/api/2014/classes/{userinput}"
         response = requests.get(url)
@@ -98,27 +106,20 @@ def choseclass():
         abltyscr.config(text=f"Ability Score: {data['ability_score']}")
         print(data['ability_score'])
     
-    searchskill=tk.Button(root, text="Search", command=searchclass)
-    searchskill.pack(pady=1)
-    possvalues="Possible values: barbarian, bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer, warlock, wizard"
-    possval.config(text=possvalues)
-    possval.pack()
+    search.config(command=findclass)
+    
+    
 
 
 
 def choserace():
-    skillbutton.pack_forget()
-    classbutton.pack_forget()
-    racebutton.pack_forget()
-    goback.pack(pady=5)
-
-    entry=tk.Entry(root, width=50)
-    entry.pack(pady=30)
+    menuframe.pack_forget()
+    searchframe.pack(fill="both",expand=True)
+    possvalues="Possible values:\n dragonborn, dwarf, elf, gnome, half-elf, half-orc, halfling, human, tiefling"
+    possval.config(text=possvalues)
 
     def searchrace():
-        name.pack(side="top")
-        desc.pack(pady=1)
-        abltyscr.pack(pady=1)
+
         userinput=entry.get().lower()
         url=f"https://www.dnd5eapi.co/api/2014/races/{userinput}"
         response = requests.get(url)
@@ -134,27 +135,26 @@ def choserace():
         abltyscr.config(text=f"Ability Score: {data['ability_score']}")
         print(data['ability_score'])
     
-    searchskill=tk.Button(root, text="Search", command=searchrace)
-    searchskill.pack(pady=1)
-    possvalues="Possible values: dragonborn, dwarf, elf, gnome, half-elf, half-orc, halfling, human, tiefling"
-    possval.config(text=possvalues)
-    possval.pack()
+    search.config(command=searchrace)
+    
+    
 
 
 
 root.geometry("800x700")
 root.title("D&D 5e")
-label1=tk.Label(root, text="D&D 5e info search: Search a Skill, Class, or Race", font=("Times New Roman", 25)).pack()
+label1=tk.Label(menuframe, text="D&D 5e info search: Search a Skill, Class, or Race", font=("Times New Roman", 25))
+label1.pack()
 
-skillbutton=tk.Button(root, text="Skills",font=("Times New Roman", 30), command=choseskill)
+skillbutton=tk.Button(menuframe, text="Skills",font=("Times New Roman", 30), command=choseskill)
 skillbutton.pack()
-classbutton=tk.Button(root, text="Classes",font=("Times New Roman", 30), command=choseclass)
+classbutton=tk.Button(menuframe, text="Classes",font=("Times New Roman", 30), command=choseclass)
 classbutton.pack(pady=5)
-racebutton=tk.Button(root, text="Races",font=("Times New Roman", 30), command=choserace)
+racebutton=tk.Button(menuframe, text="Races",font=("Times New Roman", 30), command=choserace)
 racebutton.pack(pady=5)
 
 
-
+menuframe.pack(fill="both", expand=True)
 
 
 
